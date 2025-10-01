@@ -1,0 +1,24 @@
+import React from "react";
+
+function MoodList({ entries }) {
+  if (entries.length === 0) return <p>No entries yet.</p>;
+  return (
+    <div>
+      <h2>Previous Entries</h2>
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {entries.map((entry, idx) => (
+          <li key={idx} style={{ marginBottom: "1.5rem", borderBottom: "1px solid #eee" }}>
+            <strong>{entry.date}: {entry.mood}</strong>
+            {entry.note && (
+              <div style={{ marginTop: "0.3rem" }}>
+                <em>Note:</em> {entry.note}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default MoodList;
