@@ -1,0 +1,49 @@
+import React, { useState } from "react";
+
+const moods = ["😊 Happy", "😐 Neutral", "😢 Sad", "😠 Angry", "😴 Tired"];
+
+function MoodEntry({ onAdd }) {
+  const [mood, setMood] = useState(moods[0]);
+  const [note, setNote] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!mood) return;
+    onAdd({
+      date: new Date().toISOString().slice(0, 10),
+      mood,
+      note,
+    });
+    setNote("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={{ marginBottom: "2rem" }}>
+      <label>
+        Today’s mood:
+        <select value={mood} onChange={(e) => setMood(e.target.value)}>
+          {moods.map((m) => (
+            <option key={m} value={m}>{m}</option>
+          ))}
+        </select>
+      </label>
+      <br />
+      <label>
+        Note:
+        <br />
+        <textarea
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          rows={3}
+          style={{ width: "100%" }}
+        />
+      </label>
+      <br />
+      <button type="submit" style={{ marginTop: "1rem" }}>
+        Add Entry
+      </button>
+    </form>
+  );
+}
+
+export default MoodEntry;
