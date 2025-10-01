@@ -1,0 +1,32 @@
+import React, { useState, useEffect } from "react";
+import MoodEntry from "./components/MoodEntry";
+import MoodList from "./components/MoodList";
+
+const LOCAL_STORAGE_KEY = "mood-journal-entries";
+
+function App() {
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (saved) setEntries(JSON.parse(saved));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(entries));
+  }, [entries]);
+
+  const addEntry = (entry) => {
+    setEntries([entry, ...entries]);
+  };
+
+  return (
+    <div style={{ maxWidth: 400, margin: "2rem auto", fontFamily: "sans-serif" }}>
+      <h1>Mood Journal</h1>
+      <MoodEntry onAdd={addEntry} />
+      <MoodList entries={entries} />
+    </div>
+  );
+}
+
+export default App;
